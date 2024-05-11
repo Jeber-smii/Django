@@ -1,0 +1,56 @@
+/* styles.css */
+.custom-table {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 3%;
+}
+
+.custom-table th {
+    font-weight: bold;
+}
+
+.custom-table td, .custom-table th {
+    vertical-align: middle;
+    width: 5%;
+}
+
+.custom-table img {
+    width: 50px;
+    height: 60px;
+    display: block;
+    margin: 0 auto;
+}
+
+.btn {
+    padding: 5px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.btn-warning {
+    width: 100%;
+}
+
+.btn-danger {
+
+    width: 100%;
+    
+    
+}
+/*******************************************search and add****************************************/
+/* Custom CSS */
+.custom-search {
+    width: 70%;
+}
+
+.custom-button {
+    width: 100%;
+}
+
+.custom-button a {
+    color: white;
+}
+
+.custom-button:hover {
+    background-color: #28a745; /* Change background color on hover */
+}
