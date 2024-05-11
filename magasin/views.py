@@ -37,7 +37,7 @@ class ProduitViewset(viewsets.ReadOnlyModelViewSet):
             queryset = queryset.filter(categorie_id=category_id)
         return queryset
 
-@login_required
+
 #*----------------------------normal--------------------
 def register(request) :
     if request.method == 'POST' : 
@@ -200,27 +200,33 @@ def editf(request,idf):
 def newCommande(request,idp):
     if request.method == 'POST':
         qte=int(request.POST.get('qte'))
-        print(qte)
-        pd=Produit.objects.get(id=idp)
-        totale = qte*pd.prix
-        commande=Commande.objects.create(
-            totaleCde=totale,
-            qte=qte,
-            user= request.user
-        )
-        #commande.produit.set(pd)
-        commande.produit.set([pd])
-        commande.save()
-        pd.quantite_en_stock=pd.quantite_en_stock-qte
-        pd.save()
-        ModificationQteStock= ModificationQuantiteStock.objects.create(
-            produit=pd,
-            ancienne_quantite=pd.quantite_en_stock+qte,
-            nouvelle_quantite=pd.quantite_en_stock
-        )
         
+        pd=Produit.objects.get(id=idp)
+        alert_message = None
+    
+        if qte > pd.quantite_en_stock :
+            alert_message = "Alert: Quantity exceeds available stock!"
+            return render(request, 'magasin/errorpage.html', {'alert_message': alert_message})
+        else :
+            totale = qte*pd.prix
+            commande=Commande.objects.create(
+                totaleCde=totale,
+                qte=qte,
+                user= request.user
+            )
+            #commande.produit.set(pd)
+            commande.produit.set([pd])
+            commande.save()
+            pd.quantite_en_stock=pd.quantite_en_stock-qte
+            pd.save()
+            ModificationQteStock= ModificationQuantiteStock.objects.create(
+                produit=pd,
+                ancienne_quantite=pd.quantite_en_stock+qte,
+                nouvelle_quantite=pd.quantite_en_stock
+            )
+            
 
-        return redirect('produit')
+            return redirect('produit')
         
     else:
         return redirect('produit')
