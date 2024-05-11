@@ -1,0 +1,88 @@
+
+{% extends './base.html' %}
+{% load static %}
+
+{% block links  %} <link rel="stylesheet" href="{% static 'css/fournisseur.css' %}"> {% endblock links %}
+
+{% block title %} Fournisseur {% endblock title %}
+{% block content %}
+    <div class="parent" >
+    
+        <div class="child1">
+            <div class="col-md-6">
+                <form action="#" method="GET">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Search..." name="q">
+                        <button class="btn btn-outline-primary" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+
+            <h1 style="margin-bottom: 5%;">Liste fournisseur</h1>
+            <table class="table-hover" style="width: 130%;">
+                <tr >
+                    <th scope="col">Fournisseur</th>
+                    <th scope="col">Adresse</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Telephone</th>
+                    <th scope="col" colspan="2">Action</th>
+                </tr>
+                {% for four in listF %}
+                    <tr ></tr>
+                        <td scope="col">{{four.nom}}</td>
+                        <td scope="col">{{four.adresse}}</td>
+                        <td scope="col">{{four.email}}</td>
+                        <td scope="col">{{four.telephone}}</td>
+                        <td scope="col">
+                            <form action="{% url 'EditF' four.id %}" method="get">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-warning" > Modifier </button>
+                            </form>
+                        </td>
+                        <td scope="col">
+                            <form method="post" action="{% url 'deletef' four.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger" >Delete</button>
+                            </form>    
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <dvi class="child2" style="width: 25%;">
+            {% if action == 'add' %}
+                <h2>Ajouter Fournisseur</h2>
+            {% elif action == 'update' %}
+                <h2>Edit Fournisseur</h2>
+            {% endif %}
+
+            <form action="{% if action == 'add' %}{% url 'AddF' %}{% elif action == 'update' %}{% url 'EditF' four.id %}{% endif %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="namef">Nom: </label>
+                    <input type="text"  placeholder="Nom" name="name" id="namef" value="{{ four.nom }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="adresse">Adresse: </label>
+                    <input type="text"  placeholder="Adresse" value="{{ four.adresse }}" name="adresse" id="adresse" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email: </label>
+                    <input type="email"  placeholder="Email" value="{{ four.email }}" name="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Telephone: </label>
+                    <input type="tel"  placeholder="Telephone" value="{{ four.telephone }}" name="phone" id="phone" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    {% if action == 'add' %}
+                        Ajouter
+                    {% elif action == 'update' %}
+                        Update
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+
+{% endblock  %}

@@ -1,0 +1,23 @@
+{% extends "mysite/base.html" %}
+{% block title %}Détails du Post{% endblock title %}
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div class="container" style="width: 100%;">
+        <div class="card" style=" width: 70%;border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <div class="card-body">
+                <h2 class="card-title" style="font-size: 24px; color: #333; margin-bottom: 15px;">{{ post.title }}</h2>
+                <p class="card-text" style="font-size: 16px; color: #666; margin-bottom: 10px;"><strong>Author: </strong> {{ post.author }}</p>
+                <p class="card-text" style="font-size: 16px; color: #666; margin-bottom: 10px;"><strong>Last Update:</strong> {{ post.updated_on }}</p>
+                <p class="card-text" style="font-size: 16px; color: #666; margin-bottom: 10px;"><strong>Content :</strong> {{ post.content }}</p>
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" class="rounded float-start" alt="Image du Post" style="border-radius: 10px; margin-top: 15px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" width="100%">
+                {% endif %}
+                <div style="margin-top: 20px;">
+                    <a href="{% url 'liste_posts' %}" class="btn btn-primary" style="background-color: #007bff; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; text-decoration: none;">Go Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

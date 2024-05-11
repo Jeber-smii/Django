@@ -1,0 +1,28 @@
+
+{% extends "mysite/base.html" %}
+{% load static %}
+
+{% block links  %} <link rel="stylesheet" href="{% static 'css/addpost.css' %}"> {% endblock links %}
+
+{% block title %} 
+Créer le Post
+{% endblock title %}
+{% block styles %}
+{% endblock styles %}
+{% block content %}
+<div class="row justify-content-center content " >
+    <div class="col-xs-6"> 
+        <h1 >Créer le Post
+        </h1>
+        <div class="custom-form-style">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary btn-lg">Enregistrer</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

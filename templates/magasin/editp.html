@@ -1,0 +1,62 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block links  %} <link rel="stylesheet" href="{% static 'css/fournisseur.css' %}"> {% endblock links %}
+{% block title %} Edit Produit {% endblock title %}
+
+<!--new item in nav bar -->
+
+{% block styles %}
+  <style>
+    body{
+        text-align: center;
+    }
+  </style>
+{% endblock %}
+{% block content %}
+  <div class="parent"> 
+    <dvi class="child1" style="width: 50%; margin-left: 25%;">
+      <h3>Modofier donner</h3>
+      <form action="{% url 'editp' produit.id %}" method="post">
+          {% csrf_token %}
+          <label for="Libelle">Libelle: </label>
+          <input type="text" placeholder="Libelle" name="libelle" id="Libelle" value="{{produit.libelle}}"><br>
+          <label for="">Description: </label>
+          <input type="text" placeholder="description" name="description" id="description" value="{{produit.description }}"><br>
+          <label for="">Type: </label>
+          <input type="text" placeholder="type" name="type" id="type" value="{{produit.type}}"><br>
+          <label for="">Prix: </label>
+          <input type="text" placeholder="prix " name="prix" id="prix" value="{{produit.prix}}"><br>
+
+          <label for="">Qte: </label>
+          <input type="number" placeholder="Quantite " name="qte" value="{{produit.quantite_en_stock}}"><br>
+
+          <!-- <label class="custom-file-upload">
+            Choisir un fichier
+            <input type="file" name="img" id="fileInput" onchange="previewImage(event)">
+          </label>
+          <img id="previewImg" src="{{ produit.img.url }}" alt="" width="30%" style="display: none;">-->
+          
+          <button type="submit" class="btn btn-primary" >Modifier</button>
+
+      </form>
+    </div> 
+  </div>
+  <script>
+    function previewImage(event) {
+        var input = event.target;
+        var preview = document.getElementById('previewImg');
+        
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block'; // Afficher l'image prévisualisée
+            }
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = "";
+        }
+    }
+  </script>
+{% endblock %}

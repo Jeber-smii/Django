@@ -1,0 +1,43 @@
+{% extends './base.html' %}
+{% load static %}
+{% block title %} {{user.username}} {% endblock title %}
+{% block links  %}<!--*<link rel="stylesheet" href="{% static 'css/indexproduit.css' %}">-->  {% endblock links %}
+
+{% block content %}
+
+<div class="cont" style="margin: 2% auto; width: 70%;">
+
+    <h1 style="margin-left: 35%; margin-bottom: 2%;">Historique: {{user.username}} </h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Date Commande</th>
+            <th scope="col">Produit</th>
+            <th scope="col">Quantite</th>
+            <th scope="col">Totale</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for cmd in commands %}
+            <tr>
+                <td>{{ cmd.dateCde }}</td>
+                {% for produit in cmd.produit.all %}
+                    <td>{{ produit.libelle }}</td>
+                {% endfor %}
+
+                <td>{{ cmd.qte }}</td>
+                <td>{{ cmd.totaleCde }}</td>
+                <td>
+                    <form method="post" action="{% url 'delete_commande' cmd.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-lg btn-danger">Delete</button>
+                    </form>
+                </td>
+              </tr>
+          
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

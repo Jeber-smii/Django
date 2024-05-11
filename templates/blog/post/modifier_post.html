@@ -1,0 +1,32 @@
+
+{% extends "mysite/base.html" %}
+{% load static %}
+
+{% block links  %} <link rel="stylesheet" href="{% static 'css/addpost.css' %}"> {% endblock links %}
+
+{% block title %} 
+Modifier le post : {{ post.title }}
+{% endblock title %}
+{% block styles %}
+<link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/editpost.css'%}">
+{% endblock styles %}
+{% block content %}
+
+<div class="row justify-content-center content" >
+    <div class="col-xs-6"> 
+        <h1 >Modifier le post : {{ post.title }}</h1>
+        <div class="custom-form-style">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary btn-lg">Enregistrer</button> 
+                <a href="{% url 'liste_posts' %}" class="btn btn-primary btn-lg">Go Back</a>
+            </form>
+        </div>
+    </div>
+    
+</div>
+
+
+{% endblock %}
+

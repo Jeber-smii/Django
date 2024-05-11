@@ -1,0 +1,105 @@
+{% extends "mysite/base.html" %} 
+{% block content %} 
+    <style>
+        /* Add the CSS styles here */
+        .container {
+            max-width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 70%;
+            margin: 0 auto;
+        }
+
+        p.alert.alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        label {
+            padding: 5px;
+            text-align: right;
+        }
+
+        button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .text-center {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .text-center small a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .text-center small a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <div class="container">
+        <h2>Se connecter</h2> 
+        <form method="post"> 
+            {% csrf_token %} 
+            {% if form.non_field_errors %} 
+                {% for error in form.non_field_errors %} 
+                    <p class="alert alert-danger">{{ error }}</p>
+                {% endfor %} 
+            {% endif %} 
+            <table> 
+                {% for field in form %} 
+                    <tr> 
+                        <td><label for="{{ field.id_for_label }}">{{ field.label }}</label></td> 
+                        <td>{{ field }}</td> 
+                    </tr>
+                {% endfor %}
+            </table>
+            <button type="submit">Se connecter</button>
+        </form>
+        <div class="text-center">
+            <small>
+                Pas encore inscrit.e? 
+                <a href="{% url 'register' %}"> 
+                    S'inscrire 
+                </a> 
+                <br> 
+                Mot de passe oublié ? 
+                <a href="#"> 
+                    Renouveler mon mot de passe 
+                </a> 
+            </small>
+        </div>
+    </div>
+{% endblock %}

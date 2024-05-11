@@ -1,0 +1,103 @@
+{% extends "mysite/base.html" %}
+{% block content %}
+    <style>
+        /* Add the CSS styles here */
+        .container {
+            max-width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .small.form-text.text-danger {
+            display: block;
+            margin-top: 5px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .text-center.mt-3 small {
+            display: block;
+        }
+
+        .text-center.mt-3 small a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .text-center.mt-3 small a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <div class="container">
+        <h2 class="text-center mb-4">S'inscrire</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form method="post" action="{% url 'register' %}" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_username">Nom d'utilisateur:</label>
+                        {{ form.username }}
+                        {% for error in form.username.errors %}
+                            <small class="form-text text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="id_password1">Mot de passe:</label>
+                        {{ form.password1 }}
+                        {% for error in form.password1.errors %}
+                            <small class="form-text text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password2">Confirmer le mot de passe:</label>
+                        {{ form.password2 }}
+                        {% for error in form.password2.errors %}
+                            <small class="form-text text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mt-4">S'inscrire</button>
+                </form>
+                <div class="text-center mt-3">
+                    <small>Déjà inscrit.e? <a href="{% url 'login' %}">Se connecter</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

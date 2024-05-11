@@ -1,0 +1,74 @@
+{% extends "mysite/base.html" %} 
+
+{% block content %}
+  
+  <div style="margin-top: 5%;"></div>
+
+  <center>
+    <div id="product-container" class="row" style="width: 90%;">
+      <!-- Products will be appended here dynamically -->
+    </div>
+  </center>
+    
+  <script>
+    fetch('/magasin/api/produit/')
+        .then(response => response.json())
+        .then(products => {
+            // Process the products
+            console.log(products);
+            // Display products in HTML
+            const productContainer = document.getElementById('product-container');
+
+            products.forEach((product, index) => {
+                // Create card element
+                const card = document.createElement('div');
+                card.classList.add('card', 'col-md-2', 'mb-3' ); // Adjust col-md-* as needed
+
+                // Create image element
+                const img = document.createElement('img');
+                img.classList.add('card-img-top');
+                img.src = product.img;
+                img.alt = product.libelle;
+
+                // Create card body
+                const cardBody = document.createElement('div');
+                cardBody.classList.add('card-body');
+
+                // Create card title
+                const cardTitle = document.createElement('h5');
+                cardTitle.classList.add('card-title');
+                cardTitle.textContent = product.libelle;
+
+                // Create card text
+                const cardText = document.createElement('h3');
+                cardText.classList.add('card-text');
+                cardText.textContent = `${product.prix} DT`;
+
+                //description
+                const cardDescription = document.createElement('p');
+                cardDescription.classList.add('card-text');
+                cardDescription.textContent = `${product.description}` ;
+
+                // Append elements to card body
+                cardBody.appendChild(cardTitle);
+                cardBody.appendChild(cardText);
+                cardBody.appendChild(cardDescription);
+
+                // Append elements to card
+                card.appendChild(img);
+                card.appendChild(cardBody);
+
+                // Append card to product container
+                productContainer.appendChild(card);
+
+                // Add margin between cards
+                if ((index + 1) % 5 !== 0) {
+                    card.style.marginRight = '10px';
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+  </script>
+{% endblock %}
