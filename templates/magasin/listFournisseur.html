@@ -25,7 +25,9 @@
                     <th scope="col">Adresse</th>
                     <th scope="col">Email</th>
                     <th scope="col">Telephone</th>
+                    {% if user.is_staff %}
                     <th scope="col" colspan="2">Action</th>
+                    {% endif %}
                 </tr>
                 {% for four in listF %}
                     <tr ></tr>
@@ -33,22 +35,25 @@
                         <td scope="col">{{four.adresse}}</td>
                         <td scope="col">{{four.email}}</td>
                         <td scope="col">{{four.telephone}}</td>
-                        <td scope="col">
-                            <form action="{% url 'EditF' four.id %}" method="get">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-warning" > Modifier </button>
-                            </form>
-                        </td>
-                        <td scope="col">
-                            <form method="post" action="{% url 'deletef' four.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger" >Delete</button>
-                            </form>    
-                        </td>
+                        {% if user.is_staff %}
+                            <td scope="col">
+                                <form action="{% url 'EditF' four.id %}" method="get">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-warning" > Modifier </button>
+                                </form>
+                            </td>
+                            <td scope="col">
+                                <form method="post" action="{% url 'deletef' four.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger" >Delete</button>
+                                </form>    
+                            </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </table>
         </div>
+        {% if user.is_staff %}
         <dvi class="child2" style="width: 25%;">
             {% if action == 'add' %}
                 <h2>Ajouter Fournisseur</h2>
@@ -83,6 +88,7 @@
                 </button>
             </form>
         </div>
+        {% endif %}
     </div>
 
 {% endblock  %}
