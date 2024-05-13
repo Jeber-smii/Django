@@ -67,11 +67,11 @@ def affProduit(request):
         if query:
         # Perform the search query using your model
             results = Produit.objects.filter(Q(libelle__icontains=query) | Q(description__icontains=query))
-            return render( request,'mysite/mesProduits.html ',{'products':results} )
-    template=loader.get_template('mysite/mesProduits.html')
+            return render( request,'magasin/mesProduits.html',{'products':results} )
+    #?template=loader.get_template('mysite/mesProduits.html')
     products= Produit.objects.all()
 
-    return render( request,'mysite/mesProduits.html ',{'products':products} )
+    return render(request,'magasin/mesProduits.html',{'products':products} )
 
 @login_required
 #!function add product
